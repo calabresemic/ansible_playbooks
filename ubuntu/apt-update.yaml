@@ -6,4 +6,4 @@
     - name: update apt packages
       apt:
         upgrade: yes
-        upate_cache: yes
+        update_cache: yes

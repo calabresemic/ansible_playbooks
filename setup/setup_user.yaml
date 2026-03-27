@@ -1,26 +1,24 @@
 ---
 - hosts: all
   become: true
-  vars:
-    new_user: "michael"
 
   tasks:
     - name: Ensure the user exists
       ansible.builtin.user:
-        name: "{{ new_user }}"
+        name: michael
         shell: /bin/bash
         create_home: yes
         state: present
 
     - name: Set authorized key for the user
       ansible.posix.authorized_key:
-        user: "{{ new_user }}"
+        user: michael
         state: present
         key: "{{ michael_pub_key }}"
 
     - name: Allow the user to sudo without a password
       ansible.builtin.copy:
-        content: "{{ new_user }} ALL=(ALL) NOPASSWD: ALL"
-        dest: "/etc/sudoers.d/{{ new_user }}"
+        content: "michael ALL=(ALL) NOPASSWD: ALL"
+        dest: "/etc/sudoers.d/michael"
         mode: '0440'
         validate: 'visudo -cf %s'
